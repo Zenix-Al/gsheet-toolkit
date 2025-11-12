@@ -2,12 +2,14 @@
 __pycache__/
 *.pyc
 *.pyo
-
-# CSV outputs
 *.csv
 
 # Service account credentials (never commit these!)
 service_account.json
+
 scrapper.js
 config.json
+actions.json
 *.xlsx
+custom_script/*
+!custom_script/download_sheet.py

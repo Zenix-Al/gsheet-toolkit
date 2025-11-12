@@ -1,79 +1,171 @@
 ## gsheet-toolkit
 
-A lightweight Python toolkit for managing Google Sheets update, append, edit cells, and back up your sheets using simple scripts and CSV input.
-An edit maybe required to make it do what you wanted.
+A **modular Google Sheets automation toolkit** that lets you append, update, and edit spreadsheet data dynamically — all from the command line.
+Actions are saved in `actions.json`, and you can even plug in your own custom scripts for backups, local scanning, or sheet downloads.
 
 ---
 
-### Features
+### 🚀 Features
 
-- Update or replace an entire Google Sheet from a CSV file
-- Append new rows from a CSV input
-- Update specific cells
-- Back up your Google Sheet locally
-- Configuration via `config.json` for easy reuse
+- **Append data** — Add rows from CSV or manual input
+- **Update cells** — Change specific ranges or formulas
+- **Custom scripts** — Extend functionality (e.g., backup, folder scan, download)
+- **Config-based workflow** — Reuse credentials, spreadsheet IDs, and sheet info
+- **CSV integration** — Feed any CSV directly into Google Sheets
+- **Locale-aware formatting** — Handles text, percent, currency, date, tags, links, and formulas
 
 ---
 
-### ⚙️ Requirements
+### 🧰 Requirements
 
-- Python 3.8+
-- Google Cloud service account (with Sheets and Drive API access)
-- Dependencies (install via pip):
+- Python **3.8+**
+- Google Cloud **Service Account** with Sheets + Drive API access
+- Dependencies:
 
   ```bash
-  pip install pandas gspread google-auth
+  pip install pandas gspread google-auth openpyxl
   ```
 
 ---
 
-### 🪄 Setup
+### ⚙️ Setup
 
 1. **Create a Google Cloud Project**
 
-   - Go to [Google Cloud Console](https://console.cloud.google.com/).
-   - Enable **Google Sheets API** and **Google Drive API**.
-   - Create a **Service Account** under “APIs & Services → Credentials”.
-   - Download the **service_account.json** key file.
+   - Enable **Google Sheets API** and **Google Drive API**
+   - Create a **Service Account**
+   - Download your key as `service_account.json`
 
-   👉 See Google’s official guide here:
-   [https://developers.google.com/workspace/guides/create-credentials](https://developers.google.com/workspace/guides/create-credentials)
+   [Google Workspace Credentials Guide](https://developers.google.com/workspace/guides/create-credentials)
 
-2. **Share your target Google Sheet**
+2. **Share your Google Sheet**
 
-   - Open your Google Sheet.
-   - Click **Share** → add the _client email_ from your service account JSON file.
-   - Give it **Editor** permission.
+   - Share it with your service account email
+   - Grant **Editor** access
 
-3. **Prepare your configuration file**
+3. **Prepare your configuration**
 
-   - Copy `config_example.json` → rename to `config.json`.
-   - Update it with your own values
+   - Copy `config_example.json` → rename to `config.json`
+   - Example:
 
-4. **Prepare your CSV file**
+     ```json
+     {
+       "credentials_file": "service_account.json",
+       "spreadsheet_id": "your_spreadsheet_id_here",
+       "locale": "EU / US",
+       "version": "0.1.0"
+     }
+     ```
 
-   - Use the example at `example_data.csv.txt` as a template.
-   - Rename it to `data.csv` or update the filename in your `config.json`.
-   - Make sure your delimiter (`;` or `,`) matches your script.
+4. **Run the Toolkit**
+
+   ```bash
+   python main.py
+   ```
+
+   You’ll be prompted to select an action — append, update, or run a custom script.
 
 ---
 
-### 🧩 Example Workflow
+### 🔧 Actions System
 
-1. Edit your `data.csv` file with new entries.
-2. Run `input.py` to push them to Google Sheets.
-3. When needed, run `backup_sheet.py` to download a copy.
+Actions are stored in **`actions.json`**, allowing you to save and reuse configurations like:
+
+#### Example — Append from CSV
+
+```json
+{
+  "name": "main_database_append",
+  "action": "append",
+  "sheet_name": "Main",
+  "sheet_id": 123456,
+  "append_mode": "multiple",
+  "source_type": "csv",
+  "csv_file": "main",
+  "start_cell": "A",
+  "column_total": 7,
+  "open_sheet": "y",
+  "cell_formats": [
+    {
+      "type": "text",
+      "default": "Title",
+      "note": ""
+    },
+    {
+      "type": "link",
+      "default": "Link",
+      "note": ""
+    }
+  ]
+}
+```
+
+#### Example — Update a Cell
+
+```json
+{
+  "name": "progress_updater",
+  "action": "update",
+  "sheet_name": "DASHBOARD",
+  "target_cell": "B7",
+  "cell_formats": [{ "type": "formula", "default": "=SUM(A1:A5)", "note": "", "pattern": "0.00%" }]
+}
+```
+
+#### Example — Custom Script
+
+```json
+{
+  "name": "download_backup",
+  "action": "custom_script",
+  "custom_script": "sheet_backup.py"
+}
+```
+
+Custom scripts live in `/custom_script` and can be run just like any other action.
 
 ---
 
-### 🧠 Notes
+### Example Custom Scripts
 
-- All CSV updates are validated before sending to the sheet.
-- You can modify `delimiter`, `columns`, or notes logic inside each script.
-- Keep your `service_account.json` **private** — do not upload it to GitHub.
+- **`download_sheet.py`** — Download and back up the sheet as `.xlsx`
+
+---
+
+### Notes
+
+- Each sheet format (percent, link, formula, etc.) is automatically handled.
+- Errors are logged directly in the console — no silent failures.
+- Keep your service account key private (`service_account.json`).
+
+---
+
+### 📁 Folder Structure
+
+```
+project_root/
+├── main.py
+├── config.json
+├── actions.json
+├── src/
+│   ├── append.py
+│   ├── update.py
+│   ├── helper.py
+│   ├── manage_actions.py
+├── custom_script/
+│   ├── playing_uploader.py
+├── csv/
+│   ├── your.csv
+└── README.md
+```
 
 ---
 
 ### 📜 License
 
-MIT License © 2025
+**MIT License © 2025**
+
+---
+
+Would you like me to add a small **“Quick Action Creation”** section (like a guide to quickly make a new append/update/custom action via the prompt)?
+It’d be perfect for onboarding or open-sourcing this.

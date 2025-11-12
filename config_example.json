@@ -1,11 +1,6 @@
 {
   "credentials_file": "service_account.json",
-  "spreadsheet_id": "YOUR_SPREADSHEET_ID_HERE",
-  "worksheet_name": "Main",
-  "worksheet_name_playing": "IN PROGRESS",
-  "csv_file": "data.csv",
-  "csv_playing": "playing.csv",
-  "folder_path": "D:/games",
-  "blacklist": [".tmp"],
-  "download_link": "download_link_google_sheet"
+  "spreadsheet_id": "your_spreadsheet_id_here",
+  "locale": "EU / US",
+  "version": "0.1.0"
 }

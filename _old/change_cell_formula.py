@@ -26,7 +26,8 @@ print(f"Current formula in B7: {current_formula}")
 new_formula = input("Enter new formula for B7 (include '=' at start): ").strip()
 
 if new_formula:
-    dashboard.update("B7", new_formula)
-    print(f"B7 updated to: {new_formula}")
+    dashboard.update('B7', [[new_formula]])
+    dashboard.format('B7', {'numberFormat': {'type': 'PERCENT', 'pattern': '0.00%'}})
+    print(f"B7 updated to: {new_formula} (format: percentage)")
 else:
     print("No formula entered. B7 not changed.")
