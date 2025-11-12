@@ -5,7 +5,7 @@ Actions are saved in `actions.json`, and you can even plug in your own custom sc
 
 ---
 
-### 🚀 Features
+### Features
 
 - **Append data** — Add rows from CSV or manual input
 - **Update cells** — Change specific ranges or formulas
@@ -16,7 +16,7 @@ Actions are saved in `actions.json`, and you can even plug in your own custom sc
 
 ---
 
-### 🧰 Requirements
+### Requirements
 
 - Python **3.8+**
 - Google Cloud **Service Account** with Sheets + Drive API access
@@ -28,7 +28,7 @@ Actions are saved in `actions.json`, and you can even plug in your own custom sc
 
 ---
 
-### ⚙️ Setup
+### Setup
 
 1. **Create a Google Cloud Project**
 
@@ -165,7 +165,3 @@ project_root/
 
 **MIT License © 2025**
 
----
-
-Would you like me to add a small **“Quick Action Creation”** section (like a guide to quickly make a new append/update/custom action via the prompt)?
-It’d be perfect for onboarding or open-sourcing this.
